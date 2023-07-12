@@ -11,8 +11,9 @@ import getCroppedUrlImage from "../services/image-url";
 import { Text } from "@chakra-ui/react";
 interface Props {
   onSelectedGenre: (genre: Genres) => void;
+  selectedGenre: Genres | null;
 }
-const GenreList = ({ onSelectedGenre }: Props) => {
+const GenreList = ({ onSelectedGenre, selectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
   if (error) return null;
   if (isLoading) return <Skeleton height={"20px"} />;
@@ -29,6 +30,7 @@ const GenreList = ({ onSelectedGenre }: Props) => {
                 src={getCroppedUrlImage(genres.image_background)}
               />
               <Button
+                textColor={genres.id === selectedGenre?.id ? "green" : ""}
                 onClick={() => onSelectedGenre(genres)}
                 fontSize="lg"
                 variant={"link"}
